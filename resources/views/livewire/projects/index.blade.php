@@ -22,7 +22,6 @@
         <tr>
             <th>ID</th>
             <th>Name</th>
-            <th>Description</th>
             <th>Type</th>
             <th>Category</th>
             <th>Is active</th>
@@ -37,7 +36,6 @@
             <tr>
                 <td>{{ $project->id }}</td>
                 <td>{{ $project->name }}</td>
-                <td>{{ $project->description }}</td>
                 <td>{{ $project->type }}</td>
                 <td>{{ $project->category }}</td>
                 <td>
@@ -69,7 +67,7 @@
             </tr>
         @empty
             <tr>
-                <td colspan="10">No project found.</td>
+                <td colspan="9">No project found.</td>
             </tr>
         @endforelse
         </tbody>
