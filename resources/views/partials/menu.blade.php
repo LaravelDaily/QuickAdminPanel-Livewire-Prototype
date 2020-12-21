@@ -67,7 +67,7 @@
                 </a>
             </li>
             <li class="c-sidebar-nav-item">
-                <a href="{{ route("admin.livewire-projects.index") }}" class="c-sidebar-nav-link {{ request()->is("admin/projects") || request()->is("admin/projects/*") ? "c-active" : "" }}">
+                <a href="{{ route("admin.livewire-projects.index") }}" class="c-sidebar-nav-link {{ request()->is("admin/livewire-projects") || request()->is("admin/livewire-projects/*") ? "c-active" : "" }}">
                     <i class="fa-fw fas fa-cogs c-sidebar-nav-icon">
 
                     </i>
