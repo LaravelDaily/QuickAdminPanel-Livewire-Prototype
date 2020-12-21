@@ -3,6 +3,7 @@
 namespace App\Http\Livewire\Projects;
 
 use App\Models\Project;
+use Illuminate\Support\Facades\Gate;
 use Livewire\Component;
 use Livewire\WithPagination;
 
@@ -25,6 +26,8 @@ class Index extends Component
         'is_active',
         'price'
     ];
+
+    public $selectedEntries = [];
 
     public function render()
     {
@@ -54,6 +57,13 @@ class Index extends Component
         }
         if (in_array($direction, ['asc', 'desc'])) {
             $this->sortDirection = $direction;
+        }
+    }
+
+    public function deleteSelected()
+    {
+        if (Gate::allows('project_delete')) {
+            Project::whereIn('id', $this->selectedEntries)->delete();
         }
     }
 }

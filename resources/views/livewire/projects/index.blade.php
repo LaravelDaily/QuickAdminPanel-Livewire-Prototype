@@ -8,6 +8,12 @@
                 <option>50</option>
                 <option>100</option>
             </select>
+
+            @if (count($selectedEntries) > 0)
+                <button wire:click="deleteSelected"
+                        class="btn btn-sm btn-danger ml-3"
+                        onclick="return confirm('Are you sure?') || event.stopImmediatePropagation()">Delete Selected</button>
+            @endif
         </div>
         <div class="col text-right">
             Search:
@@ -20,6 +26,7 @@
     <table class="table table-striped">
         <thead>
         <tr>
+            <th></th>
             <th>ID
                 @include('partials.tablesort', ['field' => 'id'])
             </th>
@@ -46,6 +53,9 @@
         <tbody>
         @forelse($projects as $project)
             <tr>
+                <td>
+                    <input type="checkbox" value="{{ $project->id }}" wire:model="selectedEntries" />
+                </td>
                 <td>{{ $project->id }}</td>
                 <td>{{ $project->name }}</td>
                 <td>{{ $project->type }}</td>
@@ -79,7 +89,7 @@
             </tr>
         @empty
             <tr>
-                <td colspan="9">No project found.</td>
+                <td colspan="10">No entries found.</td>
             </tr>
         @endforelse
         </tbody>
