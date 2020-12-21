@@ -66,6 +66,14 @@
                     {{ trans('cruds.project.title') }}
                 </a>
             </li>
+            <li class="c-sidebar-nav-item">
+                <a href="{{ route("admin.livewire-projects.index") }}" class="c-sidebar-nav-link {{ request()->is("admin/projects") || request()->is("admin/projects/*") ? "c-active" : "" }}">
+                    <i class="fa-fw fas fa-cogs c-sidebar-nav-icon">
+
+                    </i>
+                    Livewire Projects
+                </a>
+            </li>
         @endcan
         @if(file_exists(app_path('Http/Controllers/Auth/ChangePasswordController.php')))
             @can('profile_password_edit')
