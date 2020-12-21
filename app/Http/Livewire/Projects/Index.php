@@ -11,9 +11,20 @@ class Index extends Component
     use WithPagination;
 
     public $entriesPerPage = 100;
+    protected $paginationTheme = 'bootstrap';
+
     public $searchQuery = '';
 
-    protected $paginationTheme = 'bootstrap';
+    public $sortField = 'id';
+    public $sortDirection = 'desc';
+    private $sortableFields = [
+        'id',
+        'name',
+        'type',
+        'category',
+        'is_active',
+        'price'
+    ];
 
     public function render()
     {
@@ -23,14 +34,26 @@ class Index extends Component
                 $query->orWhere('description', 'like', '%' . $this->searchQuery . '%');
                 $query->orWhere('type', 'like', '%' . $this->searchQuery . '%');
                 $query->orWhere('category', 'like', '%' . $this->searchQuery . '%');
-                $query->orWhereHas('author', function($q) {
+                $query->orWhereHas('author', function ($q) {
                     $q->where('name', 'like', '%' . $this->searchQuery . '%');
                 });
-                $query->orWhereHas('participants', function($q) {
+                $query->orWhereHas('participants', function ($q) {
                     $q->where('name', 'like', '%' . $this->searchQuery . '%');
                 });
-            })->paginate($this->entriesPerPage);
+            })
+            ->orderBy($this->sortField, $this->sortDirection)
+            ->paginate($this->entriesPerPage);
 
         return view('livewire.projects.index', compact('projects'));
+    }
+
+    public function sort($field, $direction)
+    {
+        if (in_array($field, $this->sortableFields)) {
+            $this->sortField = $field;
+        }
+        if (in_array($direction, ['asc', 'desc'])) {
+            $this->sortDirection = $direction;
+        }
     }
 }

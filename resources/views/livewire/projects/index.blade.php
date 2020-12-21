@@ -20,12 +20,24 @@
     <table class="table table-striped">
         <thead>
         <tr>
-            <th>ID</th>
-            <th>Name</th>
-            <th>Type</th>
-            <th>Category</th>
-            <th>Is active</th>
-            <th>Price</th>
+            <th>ID
+                @include('partials.tablesort', ['field' => 'id'])
+            </th>
+            <th>Name
+                @include('partials.tablesort', ['field' => 'name'])
+            </th>
+            <th>Type
+                @include('partials.tablesort', ['field' => 'type'])
+            </th>
+            <th>Category
+                @include('partials.tablesort', ['field' => 'category'])
+            </th>
+            <th>Is active
+                @include('partials.tablesort', ['field' => 'is_active'])
+            </th>
+            <th>Price
+                @include('partials.tablesort', ['field' => 'price'])
+            </th>
             <th>Author</th>
             <th>Participants</th>
             <th></th>
