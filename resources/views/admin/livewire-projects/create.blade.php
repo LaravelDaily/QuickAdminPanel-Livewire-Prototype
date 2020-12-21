@@ -7,7 +7,7 @@
     </div>
 
     <div class="card-body">
-        @livewire('projects.create')
+        @livewire('projects.form')
     </div>
 </div>
 @endsection

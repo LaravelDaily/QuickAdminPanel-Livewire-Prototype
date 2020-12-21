@@ -23,11 +23,13 @@ class LivewireProjectsController extends Controller
         return view('admin.livewire-projects.create');
     }
 
-    public function edit(Project $project)
+    public function edit($id)
     {
         abort_if(Gate::denies('project_edit'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
-        return view('admin.livewire-projects.edit');
+        $project = Project::findOrFail($id);
+
+        return view('admin.livewire-projects.edit', compact('project'));
     }
 
     public function show(Project $project)

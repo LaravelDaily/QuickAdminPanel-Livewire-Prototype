@@ -6,7 +6,7 @@ use App\Models\Project;
 use App\Models\User;
 use Livewire\Component;
 
-class Create extends Component
+class Form extends Component
 {
     protected $authors;
     protected $participants;
@@ -39,14 +39,14 @@ class Create extends Component
         ],
     ];
 
-    public function mount()
+    public function mount(Project $project)
     {
-        $this->entry = new Project();
+        $this->entry = $project ?? new Project();
     }
 
     public function render()
     {
-        return view('livewire.projects.create', [
+        return view('livewire.projects.form', [
             'authors' => User::all()->pluck('name', 'id')->prepend(trans('global.pleaseSelect'), ''),
             'participants' => User::all()->pluck('name', 'id')
         ]);
