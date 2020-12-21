@@ -1,4 +1,18 @@
 <div>
+    <div class="row mb-3">
+        <div class="col">
+            Per page:
+            <select wire:model="entriesPerPage">
+                <option>10</option>
+                <option>25</option>
+                <option>50</option>
+                <option>100</option>
+            </select>
+        </div>
+        <div class="col text-right">
+            
+        </div>
+    </div>
     <table class="table table-striped">
         <thead>
         <tr>

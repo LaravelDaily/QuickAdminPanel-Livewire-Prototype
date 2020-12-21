@@ -10,11 +10,13 @@ class Index extends Component
 {
     use WithPagination;
 
+    public $entriesPerPage = 100;
+
     protected $paginationTheme = 'bootstrap';
 
     public function render()
     {
-        $projects = Project::paginate(10);
+        $projects = Project::paginate($this->entriesPerPage);
 
         return view('livewire.projects.index', compact('projects'));
     }
