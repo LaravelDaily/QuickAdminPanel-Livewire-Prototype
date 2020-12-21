@@ -16,10 +16,11 @@
         "guzzlehttp/guzzle": "^7.0.1",
         "laravel/dusk": "^6.6",
         "laravel/framework": "^8.0",
+        "laravel/sanctum": "^2.8",
         "laravel/tinker": "^2.0",
         "laravel/ui": "^3.0",
-        "yajra/laravel-datatables-oracle": "^9.11",
-        "laravel/sanctum": "^2.8"
+        "livewire/livewire": "^2.3",
+        "yajra/laravel-datatables-oracle": "^9.11"
     },
     "require-dev": {
         "facade/ignition": "^2.3.6",
