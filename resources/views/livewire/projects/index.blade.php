@@ -10,8 +10,12 @@
             </select>
         </div>
         <div class="col text-right">
-            
+            Search:
+            <input wire:model.debounce.500ms="searchQuery" />
         </div>
+    </div>
+    <div wire:loading.delay class="col-12 alert alert-info">
+        Loading...
     </div>
     <table class="table table-striped">
         <thead>
