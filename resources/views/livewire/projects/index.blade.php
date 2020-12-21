@@ -2,6 +2,7 @@
     <table class="table table-striped">
         <thead>
         <tr>
+            <th>ID</th>
             <th>Name</th>
             <th>Description</th>
             <th>Type</th>
@@ -16,11 +17,15 @@
         <tbody>
         @forelse($projects as $project)
             <tr>
+                <td>{{ $project->id }}</td>
                 <td>{{ $project->name }}</td>
                 <td>{{ $project->description }}</td>
                 <td>{{ $project->type }}</td>
                 <td>{{ $project->category }}</td>
-                <td>{{ $project->is_active }}</td>
+                <td>
+                    <span style="display:none">{{ $project->is_active ?? '' }}</span>
+                    <input type="checkbox" disabled="disabled" {{ $project->is_active ? 'checked' : '' }}>
+                </td>
                 <td>{{ $project->price }}</td>
                 <td>{{ $project->author->name ?? '' }}</td>
                 <td>
@@ -46,7 +51,7 @@
             </tr>
         @empty
             <tr>
-                <td colspan="9">No project found.</td>
+                <td colspan="10">No project found.</td>
             </tr>
         @endforelse
         </tbody>
