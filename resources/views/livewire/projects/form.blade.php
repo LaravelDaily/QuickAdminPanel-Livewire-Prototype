@@ -87,6 +87,24 @@
             @endif
             <span class="help-block">{{ trans('cruds.project.fields.author_helper') }}</span>
         </div>
+        <div class="form-group" wire:ignore>
+            <label for="participants">{{ trans('cruds.project.fields.participants') }}</label>
+            <div style="padding-bottom: 4px">
+                <span class="btn btn-info btn-xs select-all" style="border-radius: 0">{{ trans('global.select_all') }}</span>
+                <span class="btn btn-info btn-xs deselect-all" style="border-radius: 0">{{ trans('global.deselect_all') }}</span>
+            </div>
+            <select class="form-control select2 {{ $errors->has('participants') ? 'is-invalid' : '' }}" name="participants_selected[]" id="participants_selected" multiple>
+                @foreach($participants as $id => $participants)
+                    <option value="{{ $id }}" {{ in_array($id, $participants_selected) ? 'selected' : '' }}>{{ $participants }}</option>
+                @endforeach
+            </select>
+            @if($errors->has('participants'))
+                <div class="invalid-feedback">
+                    {{ $errors->first('participants') }}
+                </div>
+            @endif
+            <span class="help-block">{{ trans('cruds.project.fields.participants_helper') }}</span>
+        </div>
         <div class="form-group">
             <button class="btn btn-danger" type="submit">
                 {{ trans('global.save') }}
@@ -94,3 +112,15 @@
         </div>
     </form>
 </div>
+@section('scripts')
+    @parent
+    <script>
+        $(document).ready(function() {
+            $('#participants_selected').on('change', function (e) {
+                let elementName = $(this).attr('id')
+                let data = $(this).select2("val")
+                @this.set(elementName, data)
+            });
+        });
+    </script>
+@endsection

@@ -12,6 +12,7 @@ class Form extends Component
     protected $participants;
 
     public $entry;
+    public $participants_selected;
 
     protected $rules = [
         'entry.name' => [
@@ -37,10 +38,14 @@ class Form extends Component
         'entry.author_id' => [
             'integer'
         ],
+        'participants_selected' => [
+            'array'
+        ],
     ];
 
     public function mount(Project $project)
     {
+        $this->participants_selected = $project ? $project->participants()->pluck('id')->toArray() : [];
         $this->entry = $project ?? new Project();
     }
 
@@ -56,6 +61,7 @@ class Form extends Component
     {
         $this->validate();
         $this->entry->save();
+        $this->entry->participants()->sync($this->participants_selected);
 
         return redirect()->route('admin.livewire-projects.index');
     }
