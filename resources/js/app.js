@@ -4,9 +4,9 @@
  * building robust, powerful web applications using Vue and Laravel.
  */
 
-require('./bootstrap');
+require('./bootstrap')
 
-window.Vue = require('vue');
+window.Vue = require('vue')
 
 /**
  * The following block of code may be used to automatically register your
@@ -19,7 +19,7 @@ window.Vue = require('vue');
 // const files = require.context('./', true, /\.vue$/i)
 // files.keys().map(key => Vue.component(key.split('/').pop().split('.')[0], files(key).default))
 
-Vue.component('example-component', require('./components/ExampleComponent.vue').default);
+Vue.component('example-component', require('./components/ExampleComponent.vue').default)
 
 /**
  * Next, we will create a fresh Vue application instance and attach it to
@@ -28,5 +28,15 @@ Vue.component('example-component', require('./components/ExampleComponent.vue').
  */
 
 const app = new Vue({
-    el: '#app',
-});
+  el: '#app'
+})
+
+
+/* Sidebar - Side navigation menu on mobile/responsive mode */
+window.toggleNavbar = function (collapseID) {
+  document.getElementById(collapseID).classList.toggle('hidden')
+  document.getElementById(collapseID).classList.toggle('bg-white')
+  document.getElementById(collapseID).classList.toggle('m-2')
+  document.getElementById(collapseID).classList.toggle('py-3')
+  document.getElementById(collapseID).classList.toggle('px-6')
+}
