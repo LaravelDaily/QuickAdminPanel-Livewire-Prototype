@@ -22,8 +22,10 @@
 
     @include('partials.menu')
 
-    <div class="relative md:ml-64 bg-gray-100 py-12 min-h-screen">
-        <div class="relative px-4 md:px-10 mx-auto w-full min-h-full">
+    <div class="relative md:ml-64 bg-gray-100 pb-12 min-h-screen">
+        <div class="relative bg-pink-600 md:pt-32 pb-32 pt-12"></div>
+
+        <div class="relative px-4 md:px-10 mx-auto w-full min-h-full -m-48">
             @yield('content')
         </div>
     </div>

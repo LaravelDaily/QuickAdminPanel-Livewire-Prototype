@@ -1,14 +1,5 @@
 @extends('layouts.admin')
 @section('content')
-    @can('project_create')
-        <div class="row mb-4">
-            <div class="w-full">
-                <a class="btn btn-success" href="{{ route('admin.livewire-projects.create') }}">
-                    {{ trans('global.add') }} {{ trans('cruds.project.title_singular') }}
-                </a>
-            </div>
-        </div>
-    @endcan
     <div class="card">
         <div class="card-header">
             <div class="card-row">
