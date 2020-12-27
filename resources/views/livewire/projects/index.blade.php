@@ -18,7 +18,7 @@
         </div>
         <div class="w-full sm:w-1/2 sm:text-right">
             Search:
-            <input wire:model.debounce.500ms="searchQuery" class="form-input w-full sm:w-1/3 inline-block"/>
+            <input type="text" wire:model.debounce.500ms="searchQuery" class="w-full sm:w-1/3 inline-block"/>
         </div>
     </div>
     <div wire:loading.delay class="col-12 alert alert-info">

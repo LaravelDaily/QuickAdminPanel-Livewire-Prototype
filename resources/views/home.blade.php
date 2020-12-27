@@ -25,20 +25,6 @@
                 @endif
 
                 You are logged in!
-
-                <br/>
-                <br/>
-                <br/>
-                <br/>
-                <br/>
-
-                <ul>
-                    <li class="font-bold">Pages that were changed!</li>
-                    <li>Homepage (currently open)</li>
-                    <li>Change password page (to display multi-box layout)</li>
-                    <li>Livewire projects (table, forms)</li>
-                    <li>TBD.... Auth pages</li>
-                </ul>
             </div>
         </div>
     </div>

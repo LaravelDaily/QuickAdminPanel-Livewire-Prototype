@@ -15,7 +15,7 @@
                             </div>
 
                             @if(session('message'))
-                                <div class="alert alert-info" role="alert">
+                                <div class="shadow bg-green-100 my-4 rounded p-2" role="alert">
                                     {{ session('message') }}
                                 </div>
                             @endif
@@ -31,7 +31,7 @@
                                     <input id="email"
                                            name="email"
                                            type="text"
-                                           class="px-3 py-3 placeholder-gray-400 text-gray-700 bg-white rounded text-sm shadow focus:outline-none focus:shadow-outline w-full ease-linear transition-all duration-150{{ $errors->has('email') ? ' border border-red-500' : '' }}"
+                                           class="px-3 py-3 placeholder-gray-400 text-gray-700 bg-white rounded text-sm shadow focus:outline-none focus:ring w-full ease-linear transition-all duration-150{{ $errors->has('email') ? ' border border-red-500' : '' }}"
                                            required
                                            autocomplete="email"
                                            autofocus
@@ -53,7 +53,7 @@
                                     <input id="password"
                                            name="password"
                                            type="password"
-                                           class="px-3 py-3 placeholder-gray-400 text-gray-700 bg-white rounded text-sm shadow focus:outline-none focus:shadow-outline w-full ease-linear transition-all duration-150{{ $errors->has('password') ? ' border border-red-500' : '' }}"
+                                           class="px-3 py-3 placeholder-gray-400 text-gray-700 bg-white rounded text-sm shadow focus:outline-none focus:ring w-full ease-linear transition-all duration-150{{ $errors->has('password') ? ' border border-red-500' : '' }}"
                                            required
                                            placeholder="{{ trans('global.login_password') }}">
 

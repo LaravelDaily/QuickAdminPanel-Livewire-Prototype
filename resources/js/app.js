@@ -40,3 +40,27 @@ window.toggleNavbar = function (collapseID) {
   document.getElementById(collapseID).classList.toggle('py-3')
   document.getElementById(collapseID).classList.toggle('px-6')
 }
+
+/* Opens sidebar navigation that contains sub-items */
+window.openSubNav = function (el) {
+  let parent = el.parentElement
+
+  let subnavs = document.getElementsByClassName('subnav')
+  for (let i = 0; i < subnavs.length; i++) {
+    if (!subnavs[i].classList.contains('hidden')) {
+      subnavs[i].classList.add('hidden')
+    }
+  }
+
+  parent.getElementsByClassName('subnav')[0].classList.remove('hidden')
+}
+
+window.initialSubNavLoad = function () {
+  let active = document.getElementsByClassName('has-sub sidebar-nav-active')
+  if (active[0]) {
+    window.openSubNav(active[0])
+  }
+}
+
+initialSubNavLoad()
+/* Opens sidebar navigation that contains sub-items */

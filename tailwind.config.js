@@ -1,10 +1,6 @@
 module.exports = {
-  future: {
-    removeDeprecatedGapUtilities: true,
-    purgeLayersByDefault: true
-  },
   purge: {
-    enabled: false,
+    enabled: true,
     content: [
       './resources/views/**/*.blade.php'
     ],
@@ -86,5 +82,5 @@ module.exports = {
     'visited',
     'disabled'
   ],
-  plugins: [require('@tailwindcss/custom-forms')]
+  plugins: [require('@tailwindcss/forms')]
 }

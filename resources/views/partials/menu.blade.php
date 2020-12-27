@@ -1,8 +1,8 @@
 <nav
-        class="md:left-0 md:block md:fixed md:top-0 md:bottom-0 md:overflow-y-auto md:flex-row md:flex-no-wrap md:overflow-hidden shadow-xl bg-white flex flex-wrap items-center justify-between relative md:w-64 z-10 py-4 px-6"
+        class="md:left-0 md:block md:fixed md:top-0 md:bottom-0 md:overflow-y-auto md:flex-row md:flex-nowrap md:overflow-hidden shadow-xl bg-white flex flex-wrap items-center justify-between relative md:w-64 z-10 py-4 px-6"
 >
     <div
-            class="md:flex-col md:items-stretch md:min-h-full md:flex-no-wrap px-0 flex flex-wrap items-center justify-between w-full mx-auto"
+            class="md:flex-col md:items-stretch md:min-h-full md:flex-nowrap px-0 flex flex-wrap items-center justify-between w-full mx-auto"
     >
         <button
                 class="cursor-pointer text-black opacity-50 md:hidden px-3 py-1 text-xl leading-none bg-transparent rounded border border-solid border-transparent"
@@ -12,7 +12,7 @@
             <i class="fas fa-bars"></i>
         </button>
         <a
-                class="md:block text-left md:pb-2 text-gray-700 mr-0 inline-block whitespace-no-wrap text-sm uppercase font-bold p-4 px-0"
+                class="md:block text-left md:pb-2 text-gray-700 mr-0 inline-block whitespace-nowrap text-sm uppercase font-bold p-4 px-0"
                 href="{{ route('admin.home') }}"
         >
             {{ trans('panel.site_title') }}
@@ -27,7 +27,7 @@
                 <div class="flex flex-wrap">
                     <div class="w-6/12">
                         <a
-                                class="md:block text-left md:pb-2 text-gray-700 mr-0 inline-block whitespace-no-wrap text-sm uppercase font-bold p-4 px-0"
+                                class="md:block text-left md:pb-2 text-gray-700 mr-0 inline-block whitespace-nowrap text-sm uppercase font-bold p-4 px-0"
                                 href="{{ route('admin.home') }}"
                         >
                             {{ trans('panel.site_title') }}
@@ -62,13 +62,15 @@
                 @can('user_management_access')
 
                     <li class="items-center ">
-                        <a class="{{ request()->is("admin/permissions*") || request()->is("admin/roles*") || request()->is("admin/users*") ? "sidebar-nav-active" : "sidebar-nav" }}" href="#">
+                        <a class="has-sub {{ request()->is("admin/permissions*") || request()->is("admin/roles*") || request()->is("admin/users*") ? "sidebar-nav-active" : "sidebar-nav" }}" href="#"
+                            onclick="window.openSubNav(this)"
+                        >
                             <i class="fa-fw fas fa-users c-sidebar-nav-icon">
 
                             </i>
                             {{ trans('cruds.userManagement.title') }}
                         </a>
-                        <ul class="ml-4">
+                        <ul class="ml-4 subnav hidden">
                             @can('permission_access')
                                 <li class="items-center">
                                     <a href="{{ route("admin.permissions.index") }}" class="{{ request()->is("admin/permissions") || request()->is("admin/permissions/*") ? "sidebar-nav-active" : "sidebar-nav" }}">
