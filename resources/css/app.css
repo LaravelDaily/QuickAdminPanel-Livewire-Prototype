@@ -141,3 +141,11 @@ label {
 .table > tbody > tr:hover {
     @apply bg-gray-100
 }
+
+@import "~select2/dist/css/select2.min.css";
+.select2 {
+    @apply w-full mt-2
+}
+.select2-dropdown {
+    @apply absolute block w-auto box-border bg-white border-solid border-2 border-gray-600 z-50 float-left;
+}

@@ -19,7 +19,6 @@
 <noscript>You need to enable JavaScript to run this app.</noscript>
 
 <div id="app">
-
     @include('partials.menu')
 
     <div class="relative md:ml-64 bg-gray-100 pb-12 min-h-screen">
@@ -35,8 +34,8 @@
 <form id="logoutform" action="{{ route('logout') }}" method="POST" style="display: none;">
     {{ csrf_field() }}
 </form>
-
 <script type="text/javascript" src="{{ asset('js/app.js') }}"></script>
 @livewireScripts
+@yield('scripts')
 </body>
 </html>
