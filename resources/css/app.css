@@ -1,0 +1,143 @@
+@import url('vendor/@fortawesome/fontawesome-free/css/all.min.css');
+
+@tailwind base;
+
+@tailwind components;
+
+@tailwind utilities;
+
+.row {
+    @apply mt-4 w-full
+}
+
+.card {
+    @apply relative inline-block flex flex-col min-w-0 break-words bg-white mb-6 shadow-lg rounded
+}
+
+.card > .card-header {
+    @apply rounded-t mb-0 px-4 py-4 border-0 border-b
+}
+
+.card > .card-header > .card-row {
+    @apply w-full rounded-t bg-white mb-0 text-center flex justify-between
+}
+
+.card > .card-header > .card-row > .card-title {
+    @apply font-bold text-xl text-gray-800
+}
+
+.card > .card-header > .card-row > .card-button {
+    @apply bg-pink-500 text-white font-bold uppercase text-xs px-4 py-2 rounded shadow outline-none mr-1 ease-linear transition-all duration-150
+}
+
+.card > .card-header > .card-row > .card-button:active {
+    @apply bg-pink-600
+}
+
+.card > .card-header > .card-row > .card-button:focus {
+    @apply outline-none
+}
+
+.card > .card-header > .card-row > .card-button:hover {
+    @apply shadow-md
+}
+
+.btn.btn-danger {
+    @apply bg-pink-500 text-white font-bold uppercase text-xs px-4 py-2 rounded shadow outline-none mr-1 ease-linear transition-all duration-150
+}
+
+.btn.btn-danger:active {
+    @apply bg-pink-600
+}
+
+.btn:focus {
+    @apply outline-none
+}
+
+.btn:hover {
+    @apply shadow-md
+}
+
+.btn.btn-success {
+    @apply bg-green-500 text-white font-bold uppercase text-xs px-4 py-2 rounded shadow outline-none mr-1 ease-linear transition-all duration-150
+}
+
+.btn.btn-success:active {
+    @apply bg-green-600
+}
+
+.btn.btn-info {
+    @apply bg-blue-500 text-white font-bold uppercase text-xs px-4 py-2 rounded shadow outline-none mr-1 ease-linear transition-all duration-150
+}
+
+.btn.btn-info:active {
+    @apply bg-blue-600
+}
+
+.btn.btn-primary {
+    @apply bg-gray-500 text-white font-bold uppercase text-xs px-4 py-2 rounded shadow outline-none mr-1 ease-linear transition-all duration-150
+}
+
+.btn.btn-primary:active {
+    @apply bg-gray-600
+}
+
+.card > .card-body {
+    @apply block w-full overflow-x-auto p-6
+}
+
+.sidebar-nav-active {
+    @apply text-xs uppercase py-3 font-bold block text-pink-500
+}
+
+.sidebar-nav-active > i {
+    @apply mr-2 text-sm opacity-75
+}
+
+.sidebar-nav-active:hover {
+    @apply text-pink-600
+}
+
+.sidebar-nav {
+    @apply text-xs uppercase py-3 font-bold block text-gray-800
+}
+
+.sidebar-nav > i {
+    @apply mr-2 text-sm text-gray-400
+}
+
+.sidebar-nav:hover {
+    @apply text-gray-600;
+}
+
+.form-group {
+    @apply mt-4
+}
+
+.form-group:first-of-type {
+    @apply mt-0
+}
+
+label {
+    @apply inline-block
+}
+
+.form-control {
+    @apply w-full
+}
+
+.table {
+    @apply items-center table-auto bg-transparent border-collapse
+}
+
+.table th {
+    @apply text-left bg-gray-100 sticky top-0 border-b border-gray-200 px-4 py-2 text-gray-600 font-bold tracking-wider uppercase text-xs
+}
+
+.table td {
+    @apply px-4 py-2 border-dashed border-t border-gray-200
+}
+
+.table > tbody > tr:hover {
+    @apply bg-gray-100
+}

@@ -1,13 +1,15 @@
 @extends('layouts.admin')
 @section('content')
 
-<div class="card">
-    <div class="card-header">
-        {{ trans('global.edit') }} {{ trans('cruds.project.title_singular') }}
-    </div>
+    <div class="card">
+        <div class="card-header">
+            <div class="card-row">
+                <h6 class="card-title">{{ trans('global.edit') }} {{ trans('cruds.project.title_singular') }}</h6>
+            </div>
+        </div>
 
-    <div class="card-body">
-        @livewire('projects.form', ['project' => $project])
+        <div class="card-body">
+            @livewire('projects.form', ['project' => $project])
+        </div>
     </div>
-</div>
 @endsection
