@@ -142,10 +142,24 @@ label {
     @apply bg-gray-100
 }
 
+/*
+SELECT 2
+ */
+
 @import "~select2/dist/css/select2.min.css";
 .select2 {
     @apply w-full mt-2
 }
 .select2-dropdown {
     @apply absolute block w-auto box-border bg-white border-solid border-2 border-gray-600 z-50 float-left;
+}
+
+
+/*
+DROPZONE
+ */
+@import "~dropzone/dist/dropzone.css";
+.dropzone {
+    @apply mt-3
+    /*@apply h-64 border-solid border-black border-4 text-center*/
 }

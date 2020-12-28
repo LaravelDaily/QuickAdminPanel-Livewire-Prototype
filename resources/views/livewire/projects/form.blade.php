@@ -118,62 +118,62 @@
 @section('scripts')
     @parent
     <script>
-        {{--Dropzone.options.file1Dropzone = {--}}
-        {{--    url: '{{ route('admin.upload-media') }}',--}}
-        {{--    maxFilesize: 2, //MB--}}
-        {{--    addRemoveLinks: true,--}}
-        {{--    headers: {--}}
-        {{--        'X-CSRF-TOKEN': "{{ csrf_token() }}"--}}
-        {{--    },--}}
-        {{--    params: {--}}
-        {{--        size: 2,--}}
-        {{--        model: "\\App\\Models\\Project"--}}
-        {{--    },--}}
-        {{--    success: function (file, response) {--}}
-        {{--        @this.addMedia(response.media)--}}
-        {{--    },--}}
-        {{--    removedfile: function (file) {--}}
-        {{--        file.previewElement.remove()--}}
-        {{--        if (file.existing) {--}}
-        {{--            //FOR EXISTING FILES--}}
-        {{--            @this.removeMedia(file)--}}
-        {{--        } else if (file.xhr) {--}}
-        {{--            //FOR UPLOADED FILES--}}
-        {{--            @this.removeMedia(JSON.parse(file.xhr.response).media)--}}
-        {{--        }--}}
-        {{--    },--}}
-        {{--    init: function () {--}}
-        {{--        document.addEventListener('livewire:load', () => {--}}
-        {{--            let files = @this.mediaItems--}}
-        {{--            if (files) {--}}
-        {{--                files.forEach(file => {--}}
-        {{--                    // we have to clone this because otherwise--}}
-        {{--                    // it gets passed in as reference and modifies the file data--}}
-        {{--                    // and if we do that then livewire complains about checksums on request--}}
-        {{--                    let fileClone = JSON.parse(JSON.stringify(file))--}}
-        {{--                    this.files.push(fileClone)--}}
-        {{--                    this.emit("addedfile", fileClone)--}}
-        {{--                    this.emit("thumbnail", fileClone, fileClone.url)--}}
-        {{--                    this.emit("complete", fileClone)--}}
-        {{--                })--}}
-        {{--            }--}}
-        {{--        })--}}
-        {{--    },--}}
-        {{--    error: function (file, response) {--}}
-        {{--        file.previewElement.classList.add('dz-error')--}}
+        Dropzone.options.file1Dropzone = {
+            url: '{{ route('admin.upload-media') }}',
+            maxFilesize: 2, //MB
+            addRemoveLinks: true,
+            headers: {
+                'X-CSRF-TOKEN': "{{ csrf_token() }}"
+            },
+            params: {
+                size: 2,
+                model: "\\App\\Models\\Project"
+            },
+            success: function (file, response) {
+            @this.addMedia(response.media)
+            },
+            removedfile: function (file) {
+                file.previewElement.remove()
+                if (file.existing) {
+                    //FOR EXISTING FILES
+                @this.removeMedia(file)
+                } else if (file.xhr) {
+                    //FOR UPLOADED FILES
+                @this.removeMedia(JSON.parse(file.xhr.response).media)
+                }
+            },
+            init: function () {
+                document.addEventListener('livewire:load', () => {
+                    let files = @this.mediaItems
+                    if (files) {
+                        files.forEach(file => {
+                            // we have to clone this because otherwise
+                            // it gets passed in as reference and modifies the file data
+                            // and if we do that then livewire complains about checksums on request
+                            let fileClone = JSON.parse(JSON.stringify(file))
+                            this.files.push(fileClone)
+                            this.emit("addedfile", fileClone)
+                            this.emit("thumbnail", fileClone, fileClone.url)
+                            this.emit("complete", fileClone)
+                        })
+                    }
+                })
+            },
+            error: function (file, response) {
+                file.previewElement.classList.add('dz-error')
 
-        {{--        let message = $.type(response) === 'string' ? response : response.errors.file--}}
-        {{--        return _.map(file.previewElement.querySelectorAll('[data-dz-errormessage]'), r => r.textContent = message)--}}
-        {{--    }--}}
-        {{--}--}}
+                let message = $.type(response) === 'string' ? response : response.errors.file
+                return _.map(file.previewElement.querySelectorAll('[data-dz-errormessage]'), r => r.textContent = message)
+            }
+        }
     </script>
     <script>
-        $(document).ready(function() {
+        $(document).ready(function () {
             $('.select2').select2()
             $(document).delegate('#participants_selected', 'select2:select', function (e) {
                 let elementName = $(this).attr('id')
                 let data = $(this).select2("val")
-                @this.set(elementName, data)
+            @this.set(elementName, data)
             });
         });
     </script>
