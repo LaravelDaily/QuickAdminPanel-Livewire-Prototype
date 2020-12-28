@@ -30,6 +30,8 @@ Route::group(['prefix' => 'admin', 'as' => 'admin.', 'namespace' => 'Admin', 'mi
     Route::resource('projects', 'ProjectsController');
 
     Route::resource('livewire-projects', 'LivewireProjectsController');
+
+    Route::post('upload-media', 'MediaUploadController@uploadMedia')->name('upload-media');
 });
 Route::group(['prefix' => 'profile', 'as' => 'profile.', 'namespace' => 'Auth', 'middleware' => ['auth']], function () {
 // Change password
