@@ -106,6 +106,21 @@
             <span class="help-block">{{ trans('cruds.project.fields.participants_helper') }}</span>
         </div>
 
+        <div wire:ignore>
+            <label>Date</label>
+            <input type="text" class="date form-control">
+        </div>
+
+        <div wire:ignore>
+            <label>Time</label>
+            <input type="text" class="time form-control">
+        </div>
+
+        <div wire:ignore>
+            <label>Date time</label>
+            <input type="text" class="date-time form-control">
+        </div>
+
         <div wire:ignore class="dropzone" id="file_1-dropzone"></div>
 
         <div class="form-group">
@@ -117,6 +132,39 @@
 </div>
 @section('scripts')
     @parent
+
+    // Date/Time
+    <script>
+        flatpickr('.date', {
+            defaultDate: "{{ optional($entry->birthday)->format('d/m/Y') }}",
+            dateFormat: 'm/d/Y',
+            onValueUpdate: (SelectedDates, DateStr, instance) => {
+            @this.set('entry.birthday', DateStr)
+            }
+        })
+        flatpickr('.time', {
+            defaultDate: "{{ optional($entry->birthtime)->format('H:i') }}",
+            enableTime: true,
+            noCalendar: true,
+            dateFormat: "H:i",
+            time_24hr: true,
+            onValueUpdate: (SelectedTimes, TimeStr, instance) => {
+            @this.set('entry.birthtime', TimeStr)
+            }
+        })
+
+        flatpickr('.date-time', {
+            defaultDate: "{{ optional($entry->datetime)->format('d/m/Y H:i') }}",
+            enableTime: true,
+            dateFormat: "m/d/Y H:i",
+            time_24hr: true,
+            onValueUpdate: (SelectedDateTimes, DateTimeStr, instance) => {
+            @this.set('entry.datetime', DateTimeStr)
+            }
+        })
+    </script>
+
+    // File upload
     <script>
         Dropzone.options.file1Dropzone = {
             url: '{{ route('admin.upload-media') }}',
@@ -167,6 +215,8 @@
             }
         }
     </script>
+
+    // Select2
     <script>
         $(document).ready(function () {
             $('.select2').select2()

@@ -12,6 +12,7 @@ try {
     require('bootstrap');
     require('select2')
     window.Dropzone = require('dropzone')
+    require('flatpickr')
 } catch (e) {}
 
 /**

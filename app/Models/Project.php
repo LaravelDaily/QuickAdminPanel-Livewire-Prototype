@@ -33,6 +33,12 @@ class Project extends Model implements HasMedia
         'category3' => 'Category 3',
     ];
 
+    protected $casts = [
+        'birthday' => 'datetime:Y-m-d',
+        'birthtime' => 'datetime:H:i:s',
+        'datetime' => 'datetime:Y-m-d H:i:s',
+    ];
+
     protected $fillable = [
         'name',
         'description',

@@ -163,3 +163,9 @@ DROPZONE
     @apply mt-3
     /*@apply h-64 border-solid border-black border-4 text-center*/
 }
+
+/*
+FLATPICKR
+ */
+
+@import "~flatpickr/dist/flatpickr.min.css";

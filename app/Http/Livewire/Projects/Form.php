@@ -43,6 +43,15 @@ class Form extends Component
         'entry.author_id' => [
             'integer',
         ],
+        'entry.birthday' => [
+            'date:d/m/Y'
+        ],
+        'entry.birthtime' => [
+            'date:H:i:s'
+        ],
+        'entry.datetime' => [
+            'date:H:i'
+        ],
         'participants_selected' => [
             'array',
         ],
@@ -52,7 +61,6 @@ class Form extends Component
     {
         $this->participants_selected = $project ? $project->participants()->pluck('id')->toArray() : [];
         $this->entry = $project ?? new Project();
-
         $this->mediaItemsToAdd = new Collection();
         $this->mediaItems = $project->media->map(fn($media) => [
             'id' => $media->id,
