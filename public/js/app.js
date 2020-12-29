@@ -62046,6 +62046,10 @@ try {
   window.Dropzone = __webpack_require__(/*! dropzone */ "./node_modules/dropzone/dist/dropzone.js");
 
   __webpack_require__(/*! flatpickr */ "./node_modules/flatpickr/dist/esm/index.js");
+
+  $(document).ready(function () {
+    $('.select2').select2();
+  });
 } catch (e) {}
 /**
  * We'll load the axios HTTP library which allows us to easily issue requests

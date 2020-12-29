@@ -73,7 +73,7 @@
             @endif
             <span class="help-block">{{ trans('cruds.project.fields.price_helper') }}</span>
         </div>
-        <div class="form-group">
+        <div wire:ignore>
             <label for="author_id">{{ trans('cruds.project.fields.author') }}</label>
             <select wire:model="entry.author_id" class="form-control select2 {{ $errors->has('entry.author_id') ? 'is-invalid' : '' }}" name="author_id" id="author_id">
                 @foreach($authors as $id => $author)
@@ -93,9 +93,9 @@
                 <span class="btn btn-info btn-xs select-all" style="border-radius: 0">{{ trans('global.select_all') }}</span>
                 <span class="btn btn-info btn-xs deselect-all" style="border-radius: 0">{{ trans('global.deselect_all') }}</span>
             </div>
-            <select class="select2 {{ $errors->has('participants') ? 'is-invalid' : '' }}" name="participants_selected[]" id="participants_selected" multiple>
+            <select class="select2 {{ $errors->has('participants') ? 'is-invalid' : '' }}" name="participants_selected[]" id="participants_select" multiple>
                 @foreach($participants as $id => $name)
-                    <option value="{{ $id }}" {{ in_array($id, $participants_selected) ? 'selected' : '' }}>{{ $name }}</option>
+                    <option value="{{ $id }}">{{ $name }}</option>
                 @endforeach
             </select>
             @if($errors->has('participants'))
@@ -219,11 +219,11 @@
     // Select2
     <script>
         $(document).ready(function () {
-            $('.select2').select2()
-            $(document).delegate('#participants_selected', 'select2:select', function (e) {
-                let elementName = $(this).attr('id')
-                let data = $(this).select2("val")
-            @this.set(elementName, data)
+            let $select = $('#participants_select')
+            $select.val(JSON.parse('{{ $entry->participants->pluck('id')->toJson() }}'))
+            $select.trigger('change')
+            $select.on('select2:select', function () {
+            @this.set('participants_selected', $(this).select2("val"))
             });
         });
     </script>

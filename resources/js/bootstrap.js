@@ -13,6 +13,10 @@ try {
     require('select2')
     window.Dropzone = require('dropzone')
     require('flatpickr')
+
+    $(document).ready(function() {
+        $('.select2').select2()
+    })
 } catch (e) {}
 
 /**
