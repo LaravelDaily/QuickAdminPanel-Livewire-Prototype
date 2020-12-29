@@ -6,10 +6,12 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use \DateTimeInterface;
+use Spatie\MediaLibrary\HasMedia;
+use Spatie\MediaLibrary\InteractsWithMedia;
 
-class Project extends Model
+class Project extends Model implements HasMedia
 {
-    use SoftDeletes, HasFactory;
+    use SoftDeletes, HasFactory, InteractsWithMedia;
 
     public $table = 'projects';
 
@@ -29,6 +31,12 @@ class Project extends Model
         'category1' => 'Category 1',
         'category2' => 'Category 2',
         'category3' => 'Category 3',
+    ];
+
+    protected $casts = [
+        'birthday' => 'datetime:Y-m-d',
+        'birthtime' => 'datetime:H:i:s',
+        'datetime' => 'datetime:Y-m-d H:i:s',
     ];
 
     protected $fillable = [

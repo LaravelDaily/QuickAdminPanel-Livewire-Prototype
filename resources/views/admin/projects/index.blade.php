@@ -29,9 +29,6 @@
                             {{ trans('cruds.project.fields.name') }}
                         </th>
                         <th>
-                            {{ trans('cruds.project.fields.description') }}
-                        </th>
-                        <th>
                             {{ trans('cruds.project.fields.type') }}
                         </th>
                         <th>
@@ -65,9 +62,6 @@
                             </td>
                             <td>
                                 {{ $project->name ?? '' }}
-                            </td>
-                            <td>
-                                {{ $project->description ?? '' }}
                             </td>
                             <td>
                                 {{ App\Models\Project::TYPE_RADIO[$project->type] ?? '' }}
@@ -169,7 +163,7 @@
       $($.fn.dataTable.tables(true)).DataTable()
           .columns.adjust();
   });
-  
+
 })
 
 </script>
