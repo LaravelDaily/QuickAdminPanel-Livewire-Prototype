@@ -12,7 +12,7 @@
             </div>
 
             <div class="card-body">
-                <form method="POST" action="{{ route("profile.password.updateProfile") }}">
+                <form method="POST" action="{{ route("profile.password.update-profile") }}">
                     @csrf
                     <div class="form-group">
                         <label class="required" for="name">{{ trans('cruds.user.fields.name') }}</label>
@@ -89,7 +89,7 @@
             </div>
 
             <div class="card-body">
-                <form method="POST" action="{{ route("profile.password.destroyProfile") }}"
+                <form method="POST" action="{{ route("profile.password.destroy-profile") }}"
                       onsubmit="return prompt('{{ __('global.delete_account_warning') }}') == '{{ auth()->user()->email }}'">
                     @csrf
                     <div class="form-group">
