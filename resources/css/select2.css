@@ -1,0 +1,28 @@
+.select2 {
+    @apply w-full mt-2;
+}
+.select2-dropdown {
+    @apply absolute block w-auto box-border bg-white border-solid border-2 border-gray-600 z-50 float-left;
+}
+
+.select2-selection--multiple, .select2-selection--single {
+    @apply border-black rounded-none !important;
+}
+
+.select2-selection__choice {
+    @apply bg-blue-500 text-white rounded-full px-2 !important;
+    border: none !important;
+}
+
+.select2-selection__choice span {
+    @apply text-white !important;
+}
+
+.select2-search__field:focus {
+    outline: none;
+}
+
+.select-all, .deselect-all {
+    @apply cursor-pointer;
+    font-size: 0.5rem !important;
+}

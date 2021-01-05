@@ -10,57 +10,33 @@ use Spatie\MediaLibrary\MediaCollections\Models\Media;
 
 class Form extends Component
 {
-    protected $authors;
-    protected $participants;
+    protected Collection $authors;
+    protected Collection $participants;
 
-    public $entry;
-    public $participants_selected;
+    public Project $project;
 
-    public $mediaItemsToAdd;
-    public $mediaItems;
+    public array $participantsSelected;
 
-    protected $rules = [
-        'entry.name' => [
-            'string',
-            'required',
-            'min:3',
-        ],
-        'entry.description' => [
-            'string',
-        ],
-        'entry.type' => [
-            'string',
-        ],
-        'entry.category' => [
-            'string',
-        ],
-        'entry.is_active' => [
-            'boolean',
-        ],
-        'entry.price' => [
-            'numeric',
-        ],
-        'entry.author_id' => [
-            'integer',
-        ],
-        'entry.birthday' => [
-            'date:d/m/Y'
-        ],
-        'entry.birthtime' => [
-            'date:H:i:s'
-        ],
-        'entry.datetime' => [
-            'date:H:i'
-        ],
-        'participants_selected' => [
-            'array',
-        ],
+    public Collection $mediaItemsToAdd;
+    public Collection $mediaItems;
+
+    protected array $rules = [
+        'project.name' => ['string', 'required', 'min:3',],
+        'project.description' => ['required', 'string',],
+        'project.type' => ['string',],
+        'project.is_active' => ['boolean',],
+        'project.price' => ['numeric',],
+        'project.author_id' => ['integer',],
+        'project.birthday' => ['date:d/m/Y'],
+        'project.birthtime' => ['date:H:i:s'],
+        'project.datetime' => ['date:H:i'],
+        'participantsSelected' => ['array'],
     ];
 
     public function mount(Project $project)
     {
-        $this->participants_selected = $project ? $project->participants()->pluck('id')->toArray() : [];
-        $this->entry = $project ?? new Project();
+        $this->participantsSelected = $project ? $project->participants->pluck('id')->toArray() : [];
+        $this->project = $project ?? new Project();
         $this->mediaItemsToAdd = new Collection();
         $this->mediaItems = $project->media->map(fn($media) => [
             'id' => $media->id,
@@ -77,18 +53,18 @@ class Form extends Component
     public function render()
     {
         return view('livewire.projects.form', [
-            'authors' => User::all()->pluck('name', 'id')->prepend(trans('global.pleaseSelect'), ''),
-            'participants' => User::all()->pluck('name', 'id'),
+            'authors' => User::all(),
+            'participants' => User::all(),
         ]);
     }
 
     public function submit()
     {
         $this->validate();
-        $this->entry->save();
-        $this->entry->participants()->sync($this->participants_selected);
+        $this->project->save();
+        $this->project->participants()->sync($this->participantsSelected);
 
-        $this->mediaItemsToAdd->each(fn($item) => Media::where('id', $item['id'])->update(['model_id' => $this->entry->id]));
+        $this->mediaItemsToAdd->each(fn($item) => Media::where('id', $item['id'])->update(['model_id' => $this->project->id]));
 
         return redirect()->route('admin.livewire-projects.index');
     }
