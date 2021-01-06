@@ -11,41 +11,56 @@ class Index extends Component
 {
     use WithPagination;
 
-    public $entriesPerPage = 100;
-    protected $paginationTheme = 'bootstrap';
+    public array $paginationOptions;
+    public int $perPage;
 
-    public $searchQuery = '';
+    public $search = '';
 
-    public $sortField = 'id';
+    public $sortField     = 'id';
     public $sortDirection = 'desc';
+
+    public $selectedEntries = [];
+    protected $queryString  = [
+        'search' => ['except' => ''],
+    ];
+
     private $sortableFields = [
         'id',
         'name',
         'type',
         'category',
         'is_active',
-        'price'
+        'price',
     ];
 
-    public $selectedEntries = [];
+    public function updatingSearch()
+    {
+        $this->resetPage();
+    }
+
+    public function mount()
+    {
+        $this->paginationOptions = config('panel.pagination.options');
+        $this->perPage           = config('panel.pagination.per_page');
+    }
 
     public function render()
     {
-        $projects = Project::with(['author', 'participants'])
-            ->when($this->searchQuery != '', function ($query) {
-                $query->where('name', 'like', '%' . $this->searchQuery . '%');
-                $query->orWhere('description', 'like', '%' . $this->searchQuery . '%');
-                $query->orWhere('type', 'like', '%' . $this->searchQuery . '%');
-                $query->orWhere('category', 'like', '%' . $this->searchQuery . '%');
-                $query->orWhereHas('author', function ($q) {
-                    $q->where('name', 'like', '%' . $this->searchQuery . '%');
-                });
-                $query->orWhereHas('participants', function ($q) {
-                    $q->where('name', 'like', '%' . $this->searchQuery . '%');
-                });
-            })
+        $projects = Project::with(['author', 'participants'])->when($this->search != '', function ($query) {
+            $query->where('name', 'like', '%' . $this->search . '%');
+            $query->orWhere('description', 'like', '%' . $this->search . '%');
+            $query->orWhere('type', 'like', '%' . $this->search . '%');
+            $query->orWhere('category', 'like', '%' . $this->search . '%');
+            $query->orWhereHas('author', function ($q) {
+                $q->where('name', 'like', '%' . $this->search . '%');
+            });
+            $query->orWhereHas('participants', function ($q) {
+                $q->where('name', 'like', '%' . $this->search . '%');
+            });
+        })
+
             ->orderBy($this->sortField, $this->sortDirection)
-            ->paginate($this->entriesPerPage);
+            ->paginate($this->perPage);
 
         return view('livewire.projects.index', compact('projects'));
     }
@@ -55,6 +70,7 @@ class Index extends Component
         if (in_array($field, $this->sortableFields)) {
             $this->sortField = $field;
         }
+
         if (in_array($direction, ['asc', 'desc'])) {
             $this->sortDirection = $direction;
         }

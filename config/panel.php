@@ -7,4 +7,9 @@ return [
     'available_languages' => [
         'en' => 'English',
     ],
+
+    'pagination' => [
+        'options'  => [10, 25, 50, 100],
+        'per_page' => 10,
+    ],
 ];
