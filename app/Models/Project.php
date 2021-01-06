@@ -2,18 +2,53 @@
 
 namespace App\Models;
 
+use \DateTimeInterface;
+use App\Support\HasAdvancedFilter;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
-use \DateTimeInterface;
 use Spatie\MediaLibrary\HasMedia;
 use Spatie\MediaLibrary\InteractsWithMedia;
 
 class Project extends Model implements HasMedia
 {
-    use SoftDeletes, HasFactory, InteractsWithMedia;
+    use SoftDeletes;
+    use HasFactory;
+    use InteractsWithMedia;
+    use HasAdvancedFilter;
+
+    public const TYPE_RADIO = [
+        'type1' => 'Type 1',
+        'type2' => 'Type 2',
+        'type3' => 'Type 3',
+    ];
+
+    public const CATEGORY_SELECT = [
+        'category1' => 'Category 1',
+        'category2' => 'Category 2',
+        'category3' => 'Category 3',
+    ];
 
     public $table = 'projects';
+
+    public $orderable = [
+        'id',
+        'name',
+        'type',
+        'category',
+        'is_active',
+        'price',
+        'author.name',
+    ];
+
+    protected $filterable = [
+        'name',
+        'description',
+        'type',
+        'category',
+        'author.name',
+        'participants.name',
+    ];
 
     protected $dates = [
         'created_at',
@@ -21,22 +56,10 @@ class Project extends Model implements HasMedia
         'deleted_at',
     ];
 
-    const TYPE_RADIO = [
-        'type1' => 'Type 1',
-        'type2' => 'Type 2',
-        'type3' => 'Type 3',
-    ];
-
-    const CATEGORY_SELECT = [
-        'category1' => 'Category 1',
-        'category2' => 'Category 2',
-        'category3' => 'Category 3',
-    ];
-
     protected $casts = [
-        'birthday' => 'datetime:Y-m-d',
+        'birthday'  => 'datetime:Y-m-d',
         'birthtime' => 'datetime:H:i:s',
-        'datetime' => 'datetime:Y-m-d H:i:s',
+        'datetime'  => 'datetime:Y-m-d H:i:s',
     ];
 
     protected $fillable = [
@@ -52,11 +75,6 @@ class Project extends Model implements HasMedia
         'deleted_at',
     ];
 
-    protected function serializeDate(DateTimeInterface $date)
-    {
-        return $date->format('Y-m-d H:i:s');
-    }
-
     public function author()
     {
         return $this->belongsTo(User::class, 'author_id');
@@ -65,5 +83,10 @@ class Project extends Model implements HasMedia
     public function participants()
     {
         return $this->belongsToMany(User::class);
+    }
+
+    protected function serializeDate(DateTimeInterface $date)
+    {
+        return $date->format('Y-m-d H:i:s');
     }
 }

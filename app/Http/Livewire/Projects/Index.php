@@ -2,6 +2,7 @@
 
 namespace App\Http\Livewire\Projects;
 
+use App\Http\Livewire\WithSorting;
 use App\Models\Project;
 use Illuminate\Support\Facades\Gate;
 use Livewire\Component;
@@ -10,30 +11,27 @@ use Livewire\WithPagination;
 class Index extends Component
 {
     use WithPagination;
+    use WithSorting;
 
     public array $paginationOptions;
     public int $perPage;
 
     public $search = '';
-
-    public $sortField     = 'id';
-    public $sortDirection = 'desc';
+    public $orderable;
 
     public $selectedEntries = [];
     protected $queryString  = [
-        'search' => ['except' => ''],
-    ];
-
-    private $sortableFields = [
-        'id',
-        'name',
-        'type',
-        'category',
-        'is_active',
-        'price',
+        'search'        => ['except' => ''],
+        'sortBy'        => ['except' => 'id'],
+        'sortDirection' => ['except' => 'desc'],
     ];
 
     public function updatingSearch()
+    {
+        $this->resetPage();
+    }
+
+    public function updatingPerPage()
     {
         $this->resetPage();
     }
@@ -42,38 +40,20 @@ class Index extends Component
     {
         $this->paginationOptions = config('panel.pagination.options');
         $this->perPage           = config('panel.pagination.per_page');
+        $this->orderable         = (new Project())->orderable;
     }
 
     public function render()
     {
-        $projects = Project::with(['author', 'participants'])->when($this->search != '', function ($query) {
-            $query->where('name', 'like', '%' . $this->search . '%');
-            $query->orWhere('description', 'like', '%' . $this->search . '%');
-            $query->orWhere('type', 'like', '%' . $this->search . '%');
-            $query->orWhere('category', 'like', '%' . $this->search . '%');
-            $query->orWhereHas('author', function ($q) {
-                $q->where('name', 'like', '%' . $this->search . '%');
-            });
-            $query->orWhereHas('participants', function ($q) {
-                $q->where('name', 'like', '%' . $this->search . '%');
-            });
-        })
+        $query = Project::with(['author', 'participants'])->advancedFilter([
+            's'               => $this->search ?: null,
+            'order_column'    => $this->sortBy,
+            'order_direction' => $this->sortDirection,
+        ]);
 
-            ->orderBy($this->sortField, $this->sortDirection)
-            ->paginate($this->perPage);
+        $projects = $query->paginate($this->perPage);
 
         return view('livewire.projects.index', compact('projects'));
-    }
-
-    public function sort($field, $direction)
-    {
-        if (in_array($field, $this->sortableFields)) {
-            $this->sortField = $field;
-        }
-
-        if (in_array($direction, ['asc', 'desc'])) {
-            $this->sortDirection = $direction;
-        }
     }
 
     public function deleteSelected()

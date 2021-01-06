@@ -4,7 +4,7 @@
             Per page:
             <select wire:model="perPage" class="form-select w-full sm:w-1/6">
                 @foreach($paginationOptions as $value)
-                    <option value="{{ $value }}" wire:click="resetPage()">{{ $value }}</option>
+                    <option value="{{ $value }}">{{ $value }}</option>
                 @endforeach
             </select>
 
@@ -28,25 +28,33 @@
         <thead>
         <tr>
             <th></th>
-            <th>ID
+            <th>
+                ID
                 @include('partials.tablesort', ['field' => 'id'])
             </th>
-            <th>Name
+            <th>
+                Name
                 @include('partials.tablesort', ['field' => 'name'])
             </th>
-            <th>Type
+            <th>
+                Type
                 @include('partials.tablesort', ['field' => 'type'])
             </th>
-            <th>Category
+            <th>
+                Category
                 @include('partials.tablesort', ['field' => 'category'])
             </th>
-            <th>Is active
+            <th>
+                Is active
                 @include('partials.tablesort', ['field' => 'is_active'])
             </th>
-            <th>Price
+            <th>
+                Price
                 @include('partials.tablesort', ['field' => 'price'])
             </th>
-            <th>Author</th>
+            <th>Author
+                @include('partials.tablesort', ['field' => 'author.name'])
+            </th>
             <th>Participants</th>
             <th></th>
         </tr>

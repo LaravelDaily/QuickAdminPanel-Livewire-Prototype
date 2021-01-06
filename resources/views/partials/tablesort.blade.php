@@ -1,7 +1,9 @@
-@if ($sortField == $field && $sortDirection == 'asc')
-    <i wire:click="sort('{{ $field }}', 'desc')" class="fa fa-sort-asc" aria-hidden="true"></i>
-@elseif ($sortField == $field && $sortDirection == 'desc')
-    <i wire:click="sort('{{ $field }}', 'asc')" class="fa fa-sort-desc" aria-hidden="true"></i>
-@else
-    <i wire:click="sort('{{ $field }}', 'asc')" class="fa fa-sort" aria-hidden="true" style="opacity: 0.4"></i>
+@if (in_array($field, $orderable))
+    @if ($sortBy !== $field)
+        <i wire:click="sortBy('{{ $field }}')" class="fa fa-fw fa-sort cursor-pointer" aria-hidden="true"></i>
+    @elseif ($sortBy === $field && $sortDirection == 'desc')
+        <i wire:click="sortBy('{{ $field }}')" class="fa fa-fw fa-sort-down cursor-pointer text-blue-500" aria-hidden="true"></i>
+    @else
+        <i wire:click="sortBy('{{ $field }}')" class="fa fa-fw fa-sort-up cursor-pointer text-blue-500" aria-hidden="true"></i>
+    @endif
 @endif
