@@ -40,4 +40,13 @@ class LivewireProjectsController extends Controller
 
         return view('admin.projects.show', compact('project'));
     }
+
+    public function destroy(Project $livewireProject)
+    {
+        abort_if(Gate::denies('project_delete'), Response::HTTP_FORBIDDEN, '403 Forbidden');
+
+        $livewireProject->delete();
+
+        return view('admin.livewire-projects.index');
+    }
 }
