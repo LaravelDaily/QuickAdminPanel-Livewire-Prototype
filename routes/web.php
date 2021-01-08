@@ -1,7 +1,6 @@
 <?php
 
 use App\Http\Controllers\Admin\HomeController;
-use App\Http\Controllers\Admin\LivewireProjectsController;
 use App\Http\Controllers\Admin\MediaUploadController;
 use App\Http\Controllers\Admin\PermissionsController;
 use App\Http\Controllers\Admin\ProjectsController;
@@ -38,11 +37,12 @@ Route::group(['prefix' => 'admin', 'as' => 'admin.', 'middleware' => ['auth']], 
     Route::delete('users/destroy', [UsersController::class, 'massDestroy'])->name('users.mass-destroy');
     Route::resource('users', UsersController::class);
 
-    // Projects
-    Route::delete('projects/destroy', [ProjectsController::class, 'massDestroy'])->name('projects.mass-destroy');
+    // Projects with livewire
     Route::resource('projects', ProjectsController::class);
 
-    Route::resource('livewire-projects', LivewireProjectsController::class);
+    // Projects old way
+    // Route::delete('projects/destroy', [ProjectsController::class, 'massDestroy'])->name('projects.mass-destroy');
+    // Route::resource('projects', ProjectsController::class);
 
     Route::post('upload-media', [MediaUploadController::class, 'uploadMedia'])->name('upload-media');
 });
