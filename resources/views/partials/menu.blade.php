@@ -116,15 +116,6 @@
                             {{ trans('cruds.project.title') }}
                         </a>
                     </li>
-                    <li class="items-center">
-                        <a
-                                href="{{ route("admin.livewire-projects.index") }}"
-                                class="{{ request()->is("admin/livewire-projects") || request()->is("admin/livewire-projects/*") ? "sidebar-nav-active" : "sidebar-nav" }}"
-                        >
-                            <i class="fas fa-cogs"></i>
-                            Livewire projects
-                        </a>
-                    </li>
                 @endcan
 
                 @if(file_exists(app_path('Http/Controllers/Auth/ChangePasswordController.php')))

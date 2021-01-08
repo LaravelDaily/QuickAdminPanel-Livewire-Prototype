@@ -9,7 +9,7 @@
         </div>
 
         <div class="card-body">
-            @livewire('projects.form', ['project' => $project])
+            @livewire('projects.edit', [$project])
         </div>
     </div>
 @endsection

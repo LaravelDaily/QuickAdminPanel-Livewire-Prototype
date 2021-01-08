@@ -2,6 +2,7 @@
 
 namespace App\Http\Livewire\Projects;
 
+use App\Http\Livewire\WithConfirmation;
 use App\Http\Livewire\WithSorting;
 use App\Models\Project;
 use Illuminate\Support\Facades\Gate;
@@ -12,19 +13,24 @@ class Index extends Component
 {
     use WithPagination;
     use WithSorting;
+    use WithConfirmation;
 
     public array $paginationOptions;
     public int $perPage;
+    public string $search = '';
+    public array $orderable;
+    public array $selected = [];
 
-    public $search = '';
-    public $orderable;
-
-    public $selectedEntries = [];
-    protected $queryString  = [
+    protected $queryString = [
         'search'        => ['except' => ''],
         'sortBy'        => ['except' => 'id'],
         'sortDirection' => ['except' => 'desc'],
     ];
+
+    public function getSelectedCountProperty()
+    {
+        return count($this->selected);
+    }
 
     public function updatingSearch()
     {
@@ -34,6 +40,11 @@ class Index extends Component
     public function updatingPerPage()
     {
         $this->resetPage();
+    }
+
+    public function resetSelected()
+    {
+        $this->selected = [];
     }
 
     public function mount()
@@ -58,8 +69,21 @@ class Index extends Component
 
     public function deleteSelected()
     {
-        if (Gate::allows('project_delete')) {
-            Project::whereIn('id', $this->selectedEntries)->delete();
+        if (Gate::denies('project_delete')) {
+            return;
         }
+
+        Project::whereIn('id', $this->selected)->delete();
+
+        $this->resetSelected();
+    }
+
+    public function delete(Project $project)
+    {
+        if (Gate::denies('project_delete')) {
+            return;
+        }
+
+        $project->delete();
     }
 }

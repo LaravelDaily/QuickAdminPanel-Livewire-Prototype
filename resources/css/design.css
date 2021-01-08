@@ -88,11 +88,9 @@
     @apply text-red-500
 }
 
-.form-group.invalid > input {
-    @apply border-red-500 !important;
-}
-
-.form-group.invalid > textarea {
+.form-group.invalid input,
+.form-group.invalid select,
+.form-group.invalid textarea {
     @apply border-red-500 !important;
 }
 
@@ -124,3 +122,7 @@ label {
     @apply bg-gray-100
 }
 
+.form-group .required::after {
+    content: " *";
+    color: rgba(239, 68, 68, 1);
+}

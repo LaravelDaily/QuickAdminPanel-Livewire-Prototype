@@ -37,5 +37,6 @@
 <script type="text/javascript" src="{{ asset('js/app.js') }}"></script>
 @livewireScripts
 @yield('scripts')
+@stack('scripts')
 </body>
 </html>
