@@ -7,10 +7,10 @@
             <div class="validation-message">{{ $errors->first('project.name') }}</div>
             <span class="help-block">{{ trans('cruds.project.fields.name_helper') }}</span>
         </div>
-        <div class="form-group {{ $errors->has('project.name') ? 'invalid' : '' }}">
+        <div class="form-group {{ $errors->has('project.description') ? 'invalid' : '' }}">
             <label>{{ trans('cruds.project.fields.description') }}</label>
             <textarea wire:model.defer="project.description" name="description" class="form-control"></textarea>
-            <div class="validation-message">{{ $errors->first('project.name') }}</div>
+            <div class="validation-message">{{ $errors->first('project.description') }}</div>
             <span class="help-block">{{ trans('cruds.project.fields.description_helper') }}</span>
         </div>
         <div class="form-group">
@@ -37,7 +37,7 @@
         </div>
         <div class="form-group" wire:ignore>
             <label>{{ trans('cruds.project.fields.author') }}</label>
-            <select class="form-control select2">
+            <select class="form-control select2" id="author_id">
                 @foreach($authors as $author)
                     <option value="{{ $author->id }}">{{ $author->name }}</option>
                 @endforeach
