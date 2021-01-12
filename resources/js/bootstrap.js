@@ -7,15 +7,10 @@ window._ = require('lodash');
  */
 
 try {
-    window.Popper = require('popper.js').default;
     window.$ = window.jQuery = require('jquery');
     require('select2')
     window.Dropzone = require('dropzone')
     require('flatpickr')
-
-    // $(document).ready(function() {
-    //     $('.select2').select2()
-    // })
 } catch (e) {}
 
 /**

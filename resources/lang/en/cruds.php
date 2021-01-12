@@ -5,7 +5,7 @@ return [
         'title'          => 'User management',
         'title_singular' => 'User management',
     ],
-    'permission'     => [
+    'permission' => [
         'title'          => 'Permissions',
         'title_singular' => 'Permission',
         'fields'         => [
@@ -21,7 +21,7 @@ return [
             'deleted_at_helper' => ' ',
         ],
     ],
-    'role'           => [
+    'role' => [
         'title'          => 'Roles',
         'title_singular' => 'Role',
         'fields'         => [
@@ -39,7 +39,7 @@ return [
             'deleted_at_helper'  => ' ',
         ],
     ],
-    'user'           => [
+    'user' => [
         'title'          => 'Users',
         'title_singular' => 'User',
         'fields'         => [
@@ -65,7 +65,7 @@ return [
             'deleted_at_helper'        => ' ',
         ],
     ],
-    'project'        => [
+    'project' => [
         'title'          => 'Projects',
         'title_singular' => 'Project',
         'fields'         => [
@@ -80,6 +80,12 @@ return [
             'category'            => 'Category',
             'category_helper'     => ' ',
             'is_active'           => 'Is Active',
+            'birthday'            => 'Birthday',
+            'birthtime'           => 'Birthtime',
+            'datetime'            => 'Date and Time',
+            'datetime_helper'     => '',
+            'birthday_helper'     => '',
+            'birthtime_helper'    => '',
             'is_active_helper'    => ' ',
             'price'               => 'Price',
             'price_helper'        => ' ',

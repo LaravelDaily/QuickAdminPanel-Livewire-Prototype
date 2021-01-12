@@ -26,6 +26,10 @@
     @apply font-bold uppercase text-xs px-4 py-2 rounded shadow hover:shadow-md outline-none focus:outline-none mr-1 ease-linear transition-all duration-150 cursor-pointer
 }
 
+.btn-sm {
+    @apply text-xs py-1 px-2
+}
+
 .btn.btn-primary {
     @apply bg-pink-500 text-white active:bg-pink-600
 }

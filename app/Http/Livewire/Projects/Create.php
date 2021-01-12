@@ -11,39 +11,22 @@ use Spatie\MediaLibrary\MediaCollections\Models\Media;
 class Create extends Component
 {
     public Project $project;
-    public array $participantsSelected;
-    public Collection $mediaItemsToAdd;
-    public Collection $mediaItems;
     public array $selects;
-
-    protected Collection $authors;
-    protected Collection $participants;
-
-    protected array $rules = [
-        'project.name'         => ['required', 'string', 'min:3'],
-        'project.description'  => ['string'],
-        'project.type'         => ['required', 'string'],
-        'project.category'     => ['required', 'string'],
-        'project.is_active'    => ['required', 'boolean'],
-        'project.price'        => ['numeric'],
-        'project.author_id'    => ['integer'],
-        'project.birthday'     => ['date:d/m/Y'],
-        'project.birthtime'    => ['date:H:i:s'],
-        'project.datetime'     => ['date:H:i'],
-        'participantsSelected' => ['array'],
-    ];
+    public array $participants = [];
+    public Collection $mediaItems;
+    public Collection $mediaItemsToAdd;
 
     public function mount(Project $project)
     {
         $this->project = $project;
 
-        $this->selects['authors']  = User::pluck('name', 'id');
-        $this->selects['type']     = $project::TYPE_RADIO;
-        $this->selects['category'] = $project::CATEGORY_SELECT;
+        $this->selects['type']         = $this->project::TYPE_RADIO;
+        $this->selects['category']     = $this->project::CATEGORY_SELECT;
+        $this->selects['authors']      = User::pluck('name', 'id');
+        $this->selects['participants'] = User::pluck('name', 'id');
 
-        $this->participantsSelected = $project ? $project->participants->pluck('id')->toArray() : [];
-        $this->mediaItemsToAdd      = new Collection();
-        $this->mediaItems           = $project->media->map(fn ($media) => [
+        $this->mediaItemsToAdd = new Collection();
+        $this->mediaItems      = $project->media->map(fn ($media) => [
             'id'       => $media->id,
             'url'      => $media->getUrl(),
             'size'     => $media->size,
@@ -57,9 +40,7 @@ class Create extends Component
 
     public function render()
     {
-        return view('livewire.projects.create', [
-            'participants' => User::all(),
-        ]);
+        return view('livewire.projects.create');
     }
 
     public function submit()
@@ -67,7 +48,7 @@ class Create extends Component
         $this->validate();
 
         $this->project->save();
-        $this->project->participants()->sync($this->participantsSelected);
+        $this->project->participants()->sync($this->participants);
 
         $this->mediaItemsToAdd->each(fn ($item) => Media::where('id', $item['id'])->update(['model_id' => $this->project->id]));
 
@@ -83,5 +64,22 @@ class Create extends Component
     {
         Media::findOrFail($media['id'])->delete();
         $this->mediaItemsToAdd = $this->mediaItemsToAdd->reject(fn ($item) => $item['uuid'] === $media['uuid']);
+    }
+
+    protected function rules(): array
+    {
+        return [
+            'project.name'        => ['required', 'string', 'min:3'],
+            'project.description' => ['string'],
+            'project.type'        => ['string'],
+            'project.category'    => ['required', 'string'],
+            'project.is_active'   => ['required', 'boolean'],
+            'project.price'       => ['numeric'],
+            'project.author_id'   => ['required', 'integer'],
+            'project.birthday'    => ['required', 'date_format:' . config('panel.date_format')],
+            'project.birthtime'   => ['required', 'date_format:' . config('panel.time_format')],
+            'project.datetime'    => ['required', 'date_format:' . config('panel.datetime_format')],
+            'participants'        => ['required', 'array'],
+        ];
     }
 }

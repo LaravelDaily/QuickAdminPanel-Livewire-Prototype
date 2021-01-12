@@ -8,7 +8,7 @@
     <link
             rel="apple-touch-icon"
             sizes="76x76"
-            href="{{ asset('apple-icon.png') }}"
+            href="{{ asset('img/apple-icon.png') }}"
     />
     <link rel="stylesheet" href="{{ asset('css/app.css') }}"/>
     <title>{{ trans('panel.site_title') }}</title>
