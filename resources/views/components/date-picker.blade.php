@@ -15,14 +15,16 @@ document.addEventListener("livewire:load", () => {
     var buttonsId = '#{{ $attributes['id'] }}-btn-container'
 
     function update(value) {
-        console.log('{{ $attributes['model'] }}', value)
-        @this.set('{{ $attributes['model'] }}', value)
+        console.log(buttonsId, '{{ $attributes['wire:model'] }}', value)
+        if (value === '') {
+            value = null
+        }
+        @this.set('{{ $attributes['wire:model'] }}', value)
     }
 
     @if($attributes['picker'] === 'date')
         var el = flatpickr('#{{ $attributes['id'] }}', {
-            defaultDate: "{{ $attributes['default'] }}",
-            dateFormat: "{{ $attributes['format'] }}",
+            dateFormat: "{{ config('panel.flatpickr_date_format') }}",
             onChange: (SelectedDates, DateStr, instance) => {
                 update(DateStr)
             },
@@ -32,12 +34,11 @@ document.addEventListener("livewire:load", () => {
         })
     @elseif($attributes['picker'] === 'time')
         var el = flatpickr('#{{ $attributes['id'] }}', {
-            defaultDate: "{{ $attributes['default'] }}",
             enableTime: true,
             // enableSeconds: true,
             noCalendar: true,
             time_24hr: true,
-            dateFormat: "{{ $attributes['format'] }}",
+            dateFormat: "{{ config('panel.flatpickr_time_format') }}",
             onChange: (SelectedDates, DateStr, instance) => {
                 console.log('{{ $attributes['model'] }}', DateStr)
                 update(DateStr)
@@ -48,10 +49,9 @@ document.addEventListener("livewire:load", () => {
         })
     @else
         var el = flatpickr('#{{ $attributes['id'] }}', {
-            defaultDate: "{{ $attributes['default'] }}",
             enableTime: true,
             time_24hr: true,
-            dateFormat: "{{ $attributes['format'] }}",
+            dateFormat: "{{ config('panel.flatpickr_datetime_format') }}",
             onChange: (SelectedDates, DateStr, instance) => {
                 update(DateStr)
             },

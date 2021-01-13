@@ -72,14 +72,14 @@ class Create extends Component
             'project.name'        => ['required', 'string', 'min:3'],
             'project.description' => ['string'],
             'project.type'        => ['string'],
-            'project.category'    => ['required', 'string'],
+            'project.category'    => ['string'],
             'project.is_active'   => ['required', 'boolean'],
             'project.price'       => ['numeric'],
-            'project.author_id'   => ['required', 'integer'],
-            'project.birthday'    => ['required', 'date_format:' . config('panel.date_format')],
-            'project.birthtime'   => ['required', 'date_format:' . config('panel.time_format')],
-            'project.datetime'    => ['required', 'date_format:' . config('panel.datetime_format')],
-            'participants'        => ['required', 'array'],
+            'project.author_id'   => ['integer'],
+            'project.birthday'    => ['nullable', 'date_format:' . config('panel.date_format')],
+            'project.birthtime'   => ['nullable', 'date_format:' . config('panel.time_format')],
+            'project.datetime'    => ['nullable', 'date_format:' . config('panel.datetime_format')],
+            'participants'        => ['array'],
         ];
     }
 }

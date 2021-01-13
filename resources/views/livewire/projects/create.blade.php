@@ -34,10 +34,12 @@
         {{-- Select --}}
         <div class="form-group {{ $errors->has('project.category') ? 'invalid' : '' }}">
             <label class="required">{{ trans('cruds.project.fields.category') }}</label>
-            <select class="form-control">
-                <option value="" disabled selected>{{ __('Please select') }}...</option>
+            <select class="form-control" wire:model="project.category">
+                <option value="null" disabled>{{ __('Please select') }}...</option>
                 @foreach($this->selects['category'] as $key => $value)
-                    <option wire:click="$set('project.category', '{{ $key }}')" value="{{ $key }}">{{ $value }}</option>
+                    <option value="{{ $key }}">
+                        {{ $value }}
+                    </option>
                 @endforeach
             </select>
             <div class="validation-message">{{ $errors->first('project.category') }}</div>
@@ -87,9 +89,7 @@
                 id="birthday"
                 name="birthday"
                 picker="date"
-                default="{{ optional($project)->birthday }}"
-                format="{{ config('panel.flatpickr_date_format') }}"
-                model="project.birthday"
+                wire:model="project.birthday"
                 required
             />
             <div class="validation-message">{{ $errors->first('project.birthday') }}</div>
@@ -103,8 +103,7 @@
                 id="birthtime"
                 name="birthtime"
                 picker="time"
-                format="{{ config('panel.flatpickr_time_format') }}"
-                model="project.birthtime"
+                wire:model="project.birthtime"
                 required
             />
             <div class="validation-message">{{ $errors->first('project.birthtime') }}</div>
@@ -117,8 +116,7 @@
             <x-date-picker
                 id="datetime"
                 name="datetime"
-                format="{{ config('panel.flatpickr_datetime_format') }}"
-                model="project.datetime"
+                wire:model="project.datetime"
                 required
             />
             <div class="validation-message">{{ $errors->first('project.datetime') }}</div>
