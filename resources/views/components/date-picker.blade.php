@@ -15,7 +15,6 @@ document.addEventListener("livewire:load", () => {
     var buttonsId = '#{{ $attributes['id'] }}-btn-container'
 
     function update(value) {
-        console.log(buttonsId, '{{ $attributes['wire:model'] }}', value)
         if (value === '') {
             value = null
         }
@@ -40,7 +39,6 @@ document.addEventListener("livewire:load", () => {
             time_24hr: true,
             dateFormat: "{{ config('panel.flatpickr_time_format') }}",
             onChange: (SelectedDates, DateStr, instance) => {
-                console.log('{{ $attributes['model'] }}', DateStr)
                 update(DateStr)
             },
             onReady: (SelectedDates, DateStr, instance) => {

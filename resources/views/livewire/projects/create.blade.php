@@ -19,7 +19,7 @@
         {{-- Radio --}}
         <div class="form-group {{ $errors->has('project.type') ? 'invalid' : '' }}">
             <label class="required">{{ trans('cruds.project.fields.type') }}</label>
-            @foreach($this->selects['type'] as $key => $value)
+            @foreach($this->listsForFields['type'] as $key => $value)
                 <div>
                     <label>
                         <input type="radio" name="type" wire:model="project.type" class="form-control" value="{{ $key }}">
@@ -36,7 +36,7 @@
             <label class="required">{{ trans('cruds.project.fields.category') }}</label>
             <select class="form-control" wire:model="project.category">
                 <option value="null" disabled>{{ __('Please select') }}...</option>
-                @foreach($this->selects['category'] as $key => $value)
+                @foreach($this->listsForFields['category'] as $key => $value)
                     <option value="{{ $key }}">
                         {{ $value }}
                     </option>
@@ -69,7 +69,7 @@
         {{-- Belongs To --}}
         <div class="form-group {{ $errors->has('project.author_id') ? 'invalid' : '' }}">
             <label class="required" for="author">{{ trans('cruds.project.fields.author') }}</label>
-            <x-select-list id="author" name="author" wire:model="project.author_id" :options="$this->selects['authors']"/>
+            <x-select-list id="author" name="author" wire:model="project.author_id" :options="$this->listsForFields['authors']"/>
             <div class="validation-message">{{ $errors->first('project.author_id') }}</div>
             <span class="help-block">{{ trans('cruds.project.fields.author_helper') }}</span>
         </div>
@@ -77,7 +77,7 @@
         {{-- Belongs To Many --}}
         <div class="form-group {{ $errors->has('participants') ? 'invalid' : '' }}">
             <label class="required" for="participants">{{ trans('cruds.project.fields.participants') }}</label>
-            <x-select-list id="participants" name="participants" wire:model="participants" name="participants" :options="$this->selects['participants']" multiple/>
+            <x-select-list id="participants" name="participants" wire:model="participants" name="participants" :options="$this->listsForFields['participants']" multiple/>
             <div class="validation-message">{{ $errors->first('participants') }}</div>
             <span class="help-block">{{ trans('cruds.project.fields.participants_helper') }}</span>
         </div>
@@ -123,7 +123,20 @@
             <span class="help-block">{{ trans('cruds.project.fields.datetime_helper') }}</span>
         </div>
 
-        <div class="form-group" wire:ignore class="dropzone" id="file_1-dropzone"></div>
+        <div class="form-group {{ $errors->has('mediaCollections.someXcollection') ? 'invalid' : '' }}">
+            <label class="required" for="documents">Documents</label>
+            <x-dropzone
+                id="documents"
+                name="documents"
+                action="{{ route('admin.projects.storeMedia') }}"
+                collection-name="someXcollection"
+                max-file-size="2"
+            />
+            <div class="validation-message">{{ $errors->first('mediaCollections.someXcollection') }}</div>
+            <div class="help-block">{{ trans('cruds.project.fields.documents_helper') }}</div>
+        </div>
+
+        {{ $errors }}
 
         <div class="form-group">
             <button class="btn btn-danger" type="submit">
@@ -132,55 +145,3 @@
         </div>
     </form>
 </div>
-@push('scripts')
-{{-- Dropzone file upload --}}
-<script>
-Dropzone.options.file1Dropzone = {
-    url: '{{ route('admin.upload-media') }}',
-    maxFilesize: 2, //MB
-    addRemoveLinks: true,
-    headers: {
-        'X-CSRF-TOKEN': "{{ csrf_token() }}"
-    },
-    params: {
-        size: 2,
-        model: "\\App\\Models\\Project"
-    },
-    success: function (file, response) {
-        @this.addMedia(response.media)
-    },
-    removedfile: function (file) {
-        file.previewElement.remove()
-        if (file.existing) {
-            //FOR EXISTING FILES
-            @this.removeMedia(file)
-        } else if (file.xhr) {
-            //FOR UPLOADED FILES
-            @this.removeMedia(JSON.parse(file.xhr.response).media)
-        }
-    },
-    init: function () {
-        document.addEventListener('livewire:load', () => {
-            let files = @this.mediaItems
-            if (files) {
-                files.forEach(file => {
-                    // we have to clone this because otherwise
-                    // it gets passed in as reference and modifies the file data
-                    // and if we do that then livewire complains about checksums on request
-                    let fileClone = JSON.parse(JSON.stringify(file))
-                    this.files.push(fileClone)
-                    this.emit("addedfile", fileClone)
-                    this.emit("thumbnail", fileClone, fileClone.url)
-                    this.emit("complete", fileClone)
-                })
-            }
-        })
-    },
-    error: function (file, response) {
-        file.previewElement.classList.add('dz-error')
-        let message = $.type(response) === 'string' ? response : response.errors.file
-        return _.map(file.previewElement.querySelectorAll('[data-dz-errormessage]'), r => r.textContent = message)
-    }
-}
-</script>
-@endpush

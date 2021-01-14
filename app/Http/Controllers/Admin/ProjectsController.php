@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Admin;
 use App\Http\Controllers\Controller;
 use App\Models\Project;
 use Gate;
+use Illuminate\Http\Request;
 use Symfony\Component\HttpFoundation\Response;
 
 class ProjectsController extends Controller
@@ -37,5 +38,25 @@ class ProjectsController extends Controller
         $project->load('author', 'participants');
 
         return view('admin.projects.show', compact('project'));
+    }
+
+    public function storeMedia(Request $request)
+    {
+        abort_if(Gate::none(['project_create', 'project_edit']), Response::HTTP_FORBIDDEN, '403 Forbidden');
+
+        if ($request->has('size')) {
+            $this->validate($request, [
+                'file' => 'max:' . $request->input('size') * 1024,
+            ]);
+        }
+
+        $model         = new Project();
+        $model->id     = $request->input('model_id', 0);
+        $model->exists = true;
+        $media         = $model->addMediaFromRequest('file')
+            ->toMediaCollection($request->input('collection_name'));
+        $media->wasRecentlyCreated = true;
+
+        return response()->json(compact('media'), Response::HTTP_CREATED);
     }
 }

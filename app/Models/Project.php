@@ -103,6 +103,16 @@ class Project extends Model implements HasMedia
         $this->attributes['datetime'] = $value ? Carbon::createFromFormat(config('panel.datetime_format'), $value)->format('Y-m-d H:i:s') : null;
     }
 
+    public function getDocumentsAttribute()
+    {
+        return $this->getMedia('someXcollection')->map(function ($item) {
+            $media = $item->toArray();
+            $media['url'] = $item->getUrl();
+
+            return $media;
+        });
+    }
+
     protected function serializeDate(DateTimeInterface $date)
     {
         return $date->format('Y-m-d H:i:s');

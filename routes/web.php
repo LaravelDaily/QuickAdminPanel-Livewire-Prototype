@@ -39,6 +39,7 @@ Route::group(['prefix' => 'admin', 'as' => 'admin.', 'middleware' => ['auth']], 
 
     // Projects with livewire
     Route::resource('projects', ProjectsController::class);
+    Route::post('projects/media', [ProjectsController::class, 'storeMedia'])->name('projects.storeMedia');
 
     // Projects old way
     // Route::delete('projects/destroy', [ProjectsController::class, 'massDestroy'])->name('projects.mass-destroy');

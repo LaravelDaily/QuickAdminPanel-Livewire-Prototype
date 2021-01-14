@@ -11,32 +11,24 @@ use Spatie\MediaLibrary\MediaCollections\Models\Media;
 class Edit extends Component
 {
     public Project $project;
-    public array $selects;
-    public array $participants = [];
-    public Collection $mediaItemsToAdd;
-    public Collection $mediaItems;
+    public array $listsForFields   = [];
+    public array $participants     = [];
+    public array $mediaCollections = [];
 
     public function mount(Project $project)
     {
         $this->project = $project;
+        $this->initListsForFields();
+        $this->participants = $this->project->participants->pluck('id')->toArray();
 
-        $this->selects['type']         = $this->project::TYPE_RADIO;
-        $this->selects['category']     = $this->project::CATEGORY_SELECT;
-        $this->selects['authors']      = User::pluck('name', 'id');
-        $this->selects['participants'] = User::pluck('name', 'id');
-        $this->participants            = $this->project->participants->pluck('id')->toArray();
+        $this->mediaCollections = [
+            'someXcollection' => $project->documents,
+        ];
+    }
 
-        $this->mediaItemsToAdd = new Collection();
-        $this->mediaItems      = $project->media->map(fn ($media) => [
-            'id'       => $media->id,
-            'url'      => $media->getUrl(),
-            'size'     => $media->size,
-            'name'     => $media->name,
-            'type'     => $media->type,
-            'uuid'     => $media->uuid,
-            'accepted' => true,
-            'existing' => true,
-        ]);
+    public function getMediaCollection($name)
+    {
+        return $this->mediaCollections[$name];
     }
 
     public function render()
@@ -50,20 +42,34 @@ class Edit extends Component
         $this->project->save();
         $this->project->participants()->sync($this->participants);
 
-        $this->mediaItemsToAdd->each(fn ($item) => Media::where('id', $item['id'])->update(['model_id' => $this->project->id]));
+        collect($this->mediaCollections)
+            ->flatten(1)
+            ->each(fn ($item) => Media::where('id', $item['id'])
+            ->update(['model_id' => $this->project->id]));
 
         return redirect()->route('admin.projects.index');
     }
 
-    public function addMedia($media)
+    public function addMedia($media): void
     {
-        $this->mediaItemsToAdd->push($media);
+        $this->mediaCollections[$media['collection_name']][] = $media;
     }
 
-    public function removeMedia($media)
+    public function removeMedia($media): void
     {
+        $collection = collect($this->mediaCollections[$media['collection_name']]);
+
+        $this->mediaCollections[$media['collection_name']] = $collection->reject(fn ($item) => $item['uuid'] === $media['uuid'])->toArray();
+
         Media::findOrFail($media['id'])->delete();
-        $this->mediaItemsToAdd = $this->mediaItemsToAdd->reject(fn ($item) => $item['uuid'] === $media['uuid']);
+    }
+
+    protected function initListsForFields()
+    {
+        $this->listsForFields['type']         = $this->project::TYPE_RADIO;
+        $this->listsForFields['category']     = $this->project::CATEGORY_SELECT;
+        $this->listsForFields['authors']      = User::pluck('name', 'id');
+        $this->listsForFields['participants'] = User::pluck('name', 'id');
     }
 
     protected function rules(): array
