@@ -1,16 +1,9 @@
-@import url('vendor/@fortawesome/fontawesome-free/css/all.min.css');
-
 @tailwind base;
-
 @tailwind components;
-
 @tailwind utilities;
 
-@import "design.css";
-
+@import "theme.css";
 @import "~select2/dist/css/select2.min.css";
-@import "select2.css";
-
+@import "select.css";
 @import "~dropzone/dist/dropzone.css";
-
 @import "~flatpickr/dist/flatpickr.min.css";

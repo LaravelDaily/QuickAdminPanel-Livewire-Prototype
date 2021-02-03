@@ -20,8 +20,8 @@
 @push('scripts')
 <script>
 document.addEventListener("livewire:load", () => {
-    var el = $('#{{ $attributes['id'] }}')
-    var buttonsId = '#{{ $attributes['id'] }}-btn-container'
+    let el = $('#{{ $attributes['id'] }}')
+    let buttonsId = '#{{ $attributes['id'] }}-btn-container'
 
     function initButtons() {
         $(buttonsId + ' .select-all-button').click(function (e) {
@@ -37,16 +37,9 @@ document.addEventListener("livewire:load", () => {
 
     function initSelect () {
         initButtons()
-        if (el.attr('required')) {
-            el.select2({
-                placeholder: '{{__('Select your option')}}'
-            })
-            return
-        }
-
         el.select2({
             placeholder: '{{__('Select your option')}}',
-            allowClear: true
+            allowClear: !el.attr('required')
         })
     }
 
@@ -57,7 +50,7 @@ document.addEventListener("livewire:load", () => {
     });
 
     el.on('change', function (e) {
-        var data = $(this).select2("val")
+        let data = $(this).select2("val")
         @this.set('{{ $attributes['wire:model'] }}', data)
     });
 });

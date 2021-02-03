@@ -15,7 +15,6 @@
                 @endcan
             </div>
         </div>
-
         @livewire('projects.index')
 
     </div>

@@ -12,7 +12,7 @@
 @push('scripts')
 <script>
 document.addEventListener("livewire:load", () => {
-    var buttonsId = '#{{ $attributes['id'] }}-btn-container'
+    let buttonsId = '#{{ $attributes['id'] }}-btn-container'
 
     function update(value) {
         if (value === '') {
@@ -22,7 +22,7 @@ document.addEventListener("livewire:load", () => {
     }
 
     @if($attributes['picker'] === 'date')
-        var el = flatpickr('#{{ $attributes['id'] }}', {
+        let el = flatpickr('#{{ $attributes['id'] }}', {
             dateFormat: "{{ config('panel.flatpickr_date_format') }}",
             onChange: (SelectedDates, DateStr, instance) => {
                 update(DateStr)
@@ -32,7 +32,7 @@ document.addEventListener("livewire:load", () => {
             }
         })
     @elseif($attributes['picker'] === 'time')
-        var el = flatpickr('#{{ $attributes['id'] }}', {
+        let el = flatpickr('#{{ $attributes['id'] }}', {
             enableTime: true,
             // enableSeconds: true,
             noCalendar: true,
@@ -46,7 +46,7 @@ document.addEventListener("livewire:load", () => {
             }
         })
     @else
-        var el = flatpickr('#{{ $attributes['id'] }}', {
+        let el = flatpickr('#{{ $attributes['id'] }}', {
             enableTime: true,
             time_24hr: true,
             dateFormat: "{{ config('panel.flatpickr_datetime_format') }}",
