@@ -29,7 +29,6 @@ class ProjectsExport implements FromCollection, WithHeadings, WithMapping
 
     public function map($project): array
     {
-        dd($project);
         return [
             $project->id,
             $project->name,
