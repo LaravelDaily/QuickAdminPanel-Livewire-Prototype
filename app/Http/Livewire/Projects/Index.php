@@ -2,12 +2,14 @@
 
 namespace App\Http\Livewire\Projects;
 
-use App\Http\Livewire\WithConfirmation;
-use App\Http\Livewire\WithSorting;
 use App\Models\Project;
-use Illuminate\Support\Facades\Gate;
 use Livewire\Component;
 use Livewire\WithPagination;
+use App\Exports\ProjectsExport;
+use App\Http\Livewire\WithSorting;
+use Illuminate\Support\Facades\Gate;
+use Maatwebsite\Excel\Facades\Excel;
+use App\Http\Livewire\WithConfirmation;
 
 class Index extends Component
 {
@@ -85,5 +87,10 @@ class Index extends Component
         }
 
         $project->delete();
+    }
+
+    public function export($ext)
+    {
+        return Excel::download(new ProjectsExport($this->selected), 'projects.' . $ext);
     }
 }

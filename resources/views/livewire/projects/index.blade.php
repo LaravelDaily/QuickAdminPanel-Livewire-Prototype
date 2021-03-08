@@ -17,6 +17,33 @@
             >
                     {{ __('Delete Selected') }}
             </button>
+            <button
+                class="btn bg-green-100 disabled:opacity-50 disabled:cursor-not-allowed"
+                type="button"
+                wire:click="export('csv')"
+                wire:loading.attr="disabled"
+                {{ $this->selectedCount ? '' : 'disabled' }}
+            >
+                CSV
+            </button>
+            <button
+                class="btn bg-green-100 disabled:opacity-50 disabled:cursor-not-allowed"
+                type="button"
+                wire:click="export('xlsx')"
+                wire:loading.attr="disabled"
+                {{ $this->selectedCount ? '' : 'disabled' }}
+            >
+                XLS
+            </button>
+            <button
+                class="btn bg-green-100 disabled:opacity-50 disabled:cursor-not-allowed"
+                type="button"
+                wire:click="export('pdf')"
+                wire:loading.attr="disabled"
+                {{ $this->selectedCount ? '' : 'disabled' }}
+            >
+                PDF
+            </button>
 
         </div>
         <div class="w-full sm:w-1/2 sm:text-right">
