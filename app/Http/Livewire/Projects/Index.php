@@ -10,6 +10,7 @@ use App\Http\Livewire\WithSorting;
 use Illuminate\Support\Facades\Gate;
 use Maatwebsite\Excel\Facades\Excel;
 use App\Http\Livewire\WithConfirmation;
+use Symfony\Component\HttpFoundation\Response;
 
 class Index extends Component
 {
@@ -91,6 +92,8 @@ class Index extends Component
 
     public function export($ext)
     {
+        abort_if(!in_array($ext, ['csv', 'xlsx', 'pdf']), Response::HTTP_NOT_FOUND);
+        
         return Excel::download(new ProjectsExport($this->selected), 'projects.' . $ext);
     }
 }
