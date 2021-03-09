@@ -9,8 +9,8 @@ use Maatwebsite\Excel\Concerns\FromCollection;
 
 class ProjectsExport implements FromCollection, WithHeadings, WithMapping
 {
-    public function __construct($selectedFields) {
-        $this->selectedFields = $selectedFields;
+    public function __construct($selectedRecords) {
+        $this->selectedRecords = $selectedRecords;
     }
 
     public function headings(): array
@@ -36,12 +36,13 @@ class ProjectsExport implements FromCollection, WithHeadings, WithMapping
             $project->category,
             $project->is_active,
             $project->price,
-            $project->author->name
+            $project->author->name,
+            $project->participants->implode('name', ' ')
         ];
     }
     
     public function collection()
     {
-        return Project::with('author', 'participants')->whereIn('id', $this->selectedFields)->get();
+        return Project::with('author', 'participants')->find($this->selectedRecords);
     }
 }
