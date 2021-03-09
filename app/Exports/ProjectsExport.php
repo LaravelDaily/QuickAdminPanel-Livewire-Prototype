@@ -23,7 +23,10 @@ class ProjectsExport implements FromCollection, WithHeadings, WithMapping
             'Is active',
             'Price',
             'Author',
-            'Participants'
+            'Participants',
+            'Birthday',
+            'Birthtime',
+            'Datetime',
         ];
     }
 
@@ -37,7 +40,10 @@ class ProjectsExport implements FromCollection, WithHeadings, WithMapping
             $project->is_active,
             $project->price,
             $project->author->name,
-            $project->participants->implode('name', ' ')
+            $project->participants->implode('name', ' '),
+            $project->birthday,
+            $project->birthtime,
+            $project->datetime,
         ];
     }
     

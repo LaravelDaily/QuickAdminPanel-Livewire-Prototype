@@ -86,6 +86,9 @@
                 @include('partials.tablesort', ['field' => 'author.name'])
             </th>
             <th>Participants</th>
+            <th>Birthday</th>
+            <th>Birthtime</th>
+            <th>DateTime</th>
             <th></th>
         </tr>
         </thead>
@@ -110,6 +113,9 @@
                         <span class="badge badge-info">{{ $participant->name }}</span>
                     @endforeach
                 </td>
+                <td>{{ $project->birthday }}</td>
+                <td>{{ $project->birthtime }}</td>
+                <td>{{ $project->datetime }}</td>
                 <td class="flex">
                     @can('project_edit')
                         <a class="btn btn-xs btn-info" href="{{ route('admin.projects.edit', $project->id) }}">
