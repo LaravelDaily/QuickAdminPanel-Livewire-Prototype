@@ -14,7 +14,7 @@
 <noscript>You need to enable JavaScript to run this app.</noscript>
 
 <div id="app">
-    @include('partials.menu')
+    <x-sidebar />
 
     <div class="relative md:ml-64 bg-gray-100 pb-12 min-h-screen">
         <div class="relative bg-pink-600 md:pt-32 pb-32 pt-12"></div>

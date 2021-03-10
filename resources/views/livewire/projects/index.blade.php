@@ -33,30 +33,30 @@
             <th></th>
             <th>
                 ID
-                @include('partials.tablesort', ['field' => 'id'])
+                @include('components.table.sort', ['field' => 'id'])
             </th>
             <th>
                 Name
-                @include('partials.tablesort', ['field' => 'name'])
+                @include('components.table.sort', ['field' => 'name'])
             </th>
             <th>
                 Type
-                @include('partials.tablesort', ['field' => 'type'])
+                @include('components.table.sort', ['field' => 'type'])
             </th>
             <th>
                 Category
-                @include('partials.tablesort', ['field' => 'category'])
+                @include('components.table.sort', ['field' => 'category'])
             </th>
             <th>
                 Is active
-                @include('partials.tablesort', ['field' => 'is_active'])
+                @include('components.table.sort', ['field' => 'is_active'])
             </th>
             <th>
                 Price
-                @include('partials.tablesort', ['field' => 'price'])
+                @include('components.table.sort', ['field' => 'price'])
             </th>
             <th>Author
-                @include('partials.tablesort', ['field' => 'author.name'])
+                @include('components.table.sort', ['field' => 'author.name'])
             </th>
             <th>Participants</th>
             <th></th>
